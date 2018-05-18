@@ -1,0 +1,15 @@
+- name: openshift-logging-apb playbook
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    openshift_logging_install_logging: false
+    openshift_is_containerized: true
+    openshift_client_binary: /usr/bin/oc
+    state: absent
+  roles:
+  - role: ansible.kubernetes-modules
+    install_python_requirements: no
+  - role: ansibleplaybookbundle.asb-modules
+  - role: openshift_logging
+    playbook_debug: false
