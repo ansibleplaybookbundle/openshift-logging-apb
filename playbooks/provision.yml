@@ -1,0 +1,61 @@
+- name: openshift-logging-apb playbook
+  hosts: localhost
+  gather_facts: false
+  connection: local
+  vars:
+    state: present
+    openshift_logging_install_logging: true
+    openshift_is_containerized: true
+    openshift_client_binary: /usr/bin/oc
+    openshift:
+      common:
+        config_base: /etc/origin
+        dns_domain: cluster.local
+        public_hostname: "{{ public_hostname }}"
+    openshift_image_tag: v1.5
+    openshift_logging_elasticsearch_namespace: "logging"
+    openshift_logging_use_mux: false
+    openshift_logging_use_ops: false
+    openshift_logging_es_log_appenders:
+      - "console"
+    openshift_logging_fluentd_journal_read_from_head: false
+    openshift_logging_fluentd_audit_container_engine: true
+    openshift_logging_curator_cpu_request: "100m"
+    openshift_logging_curator_memory_limit: "32Mi"
+    openshift_logging_curator_ops_cpu_request: "100m"
+    openshift_logging_curator_ops_memory_limit: "32Mi"
+    openshift_logging_elasticsearch_proxy_cpu_request: "100m"
+    openshift_logging_elasticsearch_proxy_memory_limit: "32Mi"
+    openshift_logging_es_cpu_request: "400m"
+    openshift_logging_es_memory_limit: "4Gi"
+    openshift_logging_es_ops_cpu_request: "400m"
+    openshift_logging_es_ops_memory_limit: "4Gi"
+    openshift_logging_eventrouter_cpu_request: "100m"
+    openshift_logging_eventrouter_memory_limit: "64Mi"
+    openshift_logging_fluentd_cpu_request: "100m"
+    openshift_logging_fluentd_memory_limit: "256Mi"
+    openshift_logging_kibana_cpu_request: "100m"
+    openshift_logging_kibana_memory_limit: "128Mi"
+    openshift_logging_kibana_ops_cpu_request: "100m"
+    openshift_logging_kibana_ops_memory_limit: "128Mi"
+    openshift_logging_kibana_ops_proxy_cpu_request: "100m"
+    openshift_logging_kibana_ops_proxy_memory_limit: "64Mi"
+    openshift_logging_kibana_proxy_cpu_request: "100m"
+    openshift_logging_kibana_proxy_memory_limit: "64Mi"
+    openshift_logging_kibana_hostname: "kibana.{{ openshift.common.public_hostname }}"
+    openshift_logging_kibana_ops_hostname: "kibana-ops.{{ openshift.common.public_hostname }}"
+    openshift_logging_mux_cpu_request: "400m"
+    openshift_logging_mux_memory_limit: "256Mi"
+    openshift_logging_elasticsearch_proxy_image_prefix: "docker.io/openshift/"
+    openshift_logging_elasticsearch_proxy_image_version: "v1.0.0"
+    openshift_logging_elasticsearch_image_version: latest
+    openshift_logging_fluentd_image_version: latest
+    openshift_logging_kibana_image_version: latest
+    openshift_logging_curator_image_version: latest
+  roles:
+  - role: ansible.kubernetes-modules
+    install_python_requirements: no
+  - role: ansibleplaybookbundle.asb-modules
+  - role: openshift-logging-apb
+  - role: openshift_logging
+    playbook_debug: false

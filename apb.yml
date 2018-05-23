@@ -1,0 +1,18 @@
+version: 1.0
+name: openshift-logging-apb
+description: This APB will deploy openshift-logging. Please see https://github.com/ansibleplaybookbundles/openshift-logging-apb before attempting to run it as it has special pre-requisites.
+bindable: False
+async: optional
+metadata:
+  displayName: openshift-logging
+plans:
+  - name: default
+    description: This default plan deploys openshift-logging-apb
+    free: True
+    metadata: {}
+    parameters:
+    - name: public_hostname
+      default: 127.0.0.1.nip.io
+      type: string
+      title: Openshift Cluster Public Hostname
+      required: True
