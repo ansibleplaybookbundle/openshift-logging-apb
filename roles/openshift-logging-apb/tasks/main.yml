@@ -1,7 +1,0 @@
-#These steps prepare for running openshift-ansible logging modules in a container
-#We need to fix the 127-0-0-1:8443 context to guarantee that we can run oc
-#So we copy the read only secret to the ~/.kube/config and make the edit
-#After that we copy it to /etc/origin/master/ where the logging modules expect it
-- shell: cp /tmp/admin.kubeconfig /opt/apb/.kube/config
-- shell: oc config set-cluster 127-0-0-1:8443 --server=https://kubernetes.default
-- shell: cp /opt/apb/.kube/config /etc/origin/master/admin.kubeconfig
