@@ -12,8 +12,9 @@
         config_base: /etc/origin
         dns_domain: cluster.local
         public_hostname: "{{ public_hostname }}"
+    generated_certs_dir: "{{ openshift.common.config_base }}/logging"
     openshift_image_tag: v1.5
-    openshift_logging_elasticsearch_namespace: "logging"
+    openshift_logging_elasticsearch_namespace: "openshift-logging"
     openshift_logging_use_mux: false
     openshift_logging_use_ops: false
     openshift_logging_es_log_appenders:
@@ -56,6 +57,7 @@
   - role: ansible.kubernetes-modules
     install_python_requirements: no
   - role: ansibleplaybookbundle.asb-modules
-  - role: openshift-logging-apb
+  - role: openshift-logging-apb-pre
   - role: openshift_logging
+  - role: openshift-logging-apb-post
     playbook_debug: false

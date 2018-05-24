@@ -1,0 +1,85 @@
+- name: Delete secret
+  oc_secret:
+    state: absent
+    name: "openshift-logging-apb-certs"
+    namespace: "{{ openshift_logging_elasticsearch_namespace }}"
+
+- name: Recreate the secret with certs for future runs
+  oc_secret:
+    state: present
+    name: "openshift-logging-apb-certs"
+    namespace: "{{ openshift_logging_elasticsearch_namespace }}"
+    files:
+    - name: 02.pem
+      path: "{{ generated_certs_dir }}/02.pem"
+    - name: 03.pem
+      path: "{{ generated_certs_dir }}/03.pem"
+    - name: 04.pem
+      path: "{{ generated_certs_dir }}/04.pem"
+    - name: 05.pem
+      path: "{{ generated_certs_dir }}/05.pem"
+    - name: ca.crl.srl
+      path: "{{ generated_certs_dir }}/ca.crl.srl"
+    - name: ca.crt
+      path: "{{ generated_certs_dir }}/ca.crt"
+    - name: ca.db
+      path: "{{ generated_certs_dir }}/ca.db"
+    - name: ca.db.attr
+      path: "{{ generated_certs_dir }}/ca.db.attr"
+    - name: ca.db.attr.old
+      path: "{{ generated_certs_dir }}/ca.db.attr.old"
+    - name: ca.db.old
+      path: "{{ generated_certs_dir }}/ca.db.old"
+    - name: ca.key
+      path: "{{ generated_certs_dir }}/ca.key"
+    - name: ca.serial.txt
+      path: "{{ generated_certs_dir }}/ca.serial.txt"
+    - name: ca.serial.txt.old
+      path: "{{ generated_certs_dir }}/ca.serial.txt.old"
+    - name: elasticsearch.jks
+      path: "{{ generated_certs_dir }}/elasticsearch.jks"
+    - name: kibana-internal.crt
+      path: "{{ generated_certs_dir }}/kibana-internal.crt"
+    - name: kibana-internal.key
+      path: "{{ generated_certs_dir }}/kibana-internal.key"
+    - name: logging-es.jks
+      path: "{{ generated_certs_dir }}/logging-es.jks"
+    - name: oauth_secret
+      path: "{{ generated_certs_dir }}/oauth_secret"
+    - name: passwd.yml
+      path: "{{ generated_certs_dir }}/passwd.yml"
+    - name: server-tls.json
+      path: "{{ generated_certs_dir }}/server-tls.json"
+    - name: session_secret
+      path: "{{ generated_certs_dir }}/session_secret"
+    - name: signing.conf
+      path: "{{ generated_certs_dir }}/signing.conf"
+    - name: system.admin.crt
+      path: "{{ generated_certs_dir }}/system.admin.crt"
+    - name: system.admin.csr
+      path: "{{ generated_certs_dir }}/system.admin.csr"
+    - name: system.admin.jks
+      path: "{{ generated_certs_dir }}/system.admin.jks"
+    - name: system.admin.key
+      path: "{{ generated_certs_dir }}/system.admin.key"
+    - name: system.logging.curator.crt
+      path: "{{ generated_certs_dir }}/system.logging.curator.crt"
+    - name: system.logging.curator.csr
+      path: "{{ generated_certs_dir }}/system.logging.curator.csr"
+    - name: system.logging.curator.key
+      path: "{{ generated_certs_dir }}/system.logging.curator.key"
+    - name: system.logging.fluentd.crt
+      path: "{{ generated_certs_dir }}/system.logging.fluentd.crt"
+    - name: system.logging.fluentd.csr
+      path: "{{ generated_certs_dir }}/system.logging.fluentd.csr"
+    - name: system.logging.fluentd.key
+      path: "{{ generated_certs_dir }}/system.logging.fluentd.key"
+    - name: system.logging.kibana.crt
+      path: "{{ generated_certs_dir }}/system.logging.kibana.crt"
+    - name: system.logging.kibana.csr
+      path: "{{ generated_certs_dir }}/system.logging.kibana.csr"
+    - name: system.logging.kibana.key
+      path: "{{ generated_certs_dir }}/system.logging.kibana.key"
+    - name: truststore.jks
+      path: "{{ generated_certs_dir }}/truststore.jks"
+

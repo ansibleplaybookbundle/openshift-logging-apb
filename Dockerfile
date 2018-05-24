@@ -19,8 +19,9 @@ ZTogc3RyaW5nCiAgICAgIHRpdGxlOiBPcGVuc2hpZnQgQ2x1c3RlciBQdWJsaWMgSG9zdG5hbWUK\
 ICAgICAgcmVxdWlyZWQ6IFRydWUK"
 
 RUN mkdir -p /etc/origin/master && chmod 777 -R /etc/origin
-RUN git clone https://github.com/openshift/openshift-ansible && mv openshift-ansible/roles /opt/ansible/ && rm -rf openshift-ansible
-COPY roles/openshift-logging-apb /opt/ansible/roles/openshift-logging-apb
+RUN git clone https://github.com/jmontleon/openshift-ansible -b openshift-logging-apb && mv openshift-ansible/roles /opt/ansible/ && rm -rf openshift-ansible
+COPY roles/openshift-logging-apb-pre /opt/ansible/roles/openshift-logging-apb-pre
+COPY roles/openshift-logging-apb-post opt/ansible/roles/openshift-logging-apb-post
 COPY playbooks /opt/apb/actions
 RUN chmod -R g=u /opt/{ansible,apb}
 USER apb

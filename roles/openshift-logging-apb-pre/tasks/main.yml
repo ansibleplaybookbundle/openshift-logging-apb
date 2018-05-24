@@ -1,0 +1,24 @@
+#These steps prepare for running openshift-ansible logging modules in a container
+#We need to fix the 127-0-0-1:8443 context to guarantee that we can run oc
+#So we copy the read only secret to the ~/.kube/config and make the edit
+#After that we copy it to /etc/origin/master/ where the logging modules expect it
+
+- name: Copy the admin config to the home dir
+  shell: cp /tmp/admin.kubeconfig /opt/apb/.kube/config
+
+- name: Update the admin config server setting so it's reachable with a container
+  shell: oc config set-cluster 127-0-0-1:8443 --server=https://kubernetes.default
+
+- name: Copy updated the admin config to location openshift-ansible expects
+  shell: cp /opt/apb/.kube/config /etc/origin/master/admin.kubeconfig
+
+- name: Check if ca.crt exists in the secret yet
+  stat:
+    path: /tmp/logging-certs/ca.crt
+  register: stat_result
+
+- name: Copy certs from secret if they exist
+  copy:
+    src: /tmp/logging-certs/
+    dest: /etc/origin/logging/
+  when: stat_result.stat.exists == True
